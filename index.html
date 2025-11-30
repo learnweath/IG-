@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LS Ad Agency — Book Order Service</title>
+  <style>
+    :root{
+      --accent:#0ea5a4;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --bg:#f8fafc;
+      --shadow: 0 6px 18px rgba(15,23,42,0.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:var(--bg);color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container{max-width:920px;margin:32px auto;padding:20px;}
+    .card{background:var(--card);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    header .logo{
+      width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#60a5fa);
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;
+    }
+    h1{margin:0;font-size:20px}
+    p.lead{margin:6px 0 0;color:var(--muted)}
+    form{margin-top:18px;display:grid;grid-template-columns:1fr 360px;gap:18px}
+    @media (max-width:900px){ form{grid-template-columns:1fr}}
+    .left .field{margin-bottom:12px}
+    label{display:block;font-size:13px;margin-bottom:6px;color:#0f172a}
+    input[type="text"],input[type="email"],input[type="tel"],textarea,select{
+      width:100%;padding:10px;border:1px solid #e6edf2;border-radius:8px;font-size:14px;
+      background:white;outline:none;
+    }
+    textarea{min-height:120px;resize:vertical}
+    .package{
+      display:flex;gap:12px;align-items:center;margin-bottom:10px;flex-wrap:wrap;
+    }
+    .pkg{
+      border:1px solid #e6edf2;padding:12px;border-radius:10px;min-width:150px;
+      cursor:pointer;background:white;
+    }
+    .pkg input{display:none}
+    .pkg.active{border-color:var(--accent);box-shadow:0 6px 20px rgba(14,165,164,0.12)}
+    .right{position:relative}
+    .summary{border-radius:10px;padding:12px;border:1px solid #eef2f7;background:#fbfdff}
+    .summary h3{margin:0 0 10px;font-size:16px}
+    .summary .line{display:flex;justify-content:space-between;padding:6px 0;color:#0f172a}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;border:0;padding:10px 14px;border-radius:10px;
+      cursor:pointer;font-weight:600;
+    }
+    .btn.primary{background:var(--accent);color:white}
+    .btn.ghost{background:white;border:1px solid #e6edf2}
+    .small{font-size:13px;color:var(--muted)}
+    .success{margin-top:12px;padding:10px;border-radius:8px;background:#ecfdf5;color:#065f46;border:1px solid #bbf7d0}
+    .error{margin-top:12px;padding:10px;border-radius:8px;background:#fff1f2;color:#7f1d1d;border:1px solid #fecaca}
+    footer{margin-top:18px;font-size:13px;color:var(--muted)}
+    .upi{display:flex;gap:8px;align-items:center}
+    .copy-btn{cursor:pointer;padding:6px 10px;border-radius:8px;border:1px dashed #cbd5e1;background:white}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <header>
+        <div class="logo">LS</div>
+        <div>
+          <h1>LS Ad Agency — Order Setup Service</h1>
+          <p class="lead">Fast website / ad setup. Choose a package, fill details and place order.</p>
+        </div>
+      </header>
+
+      <form id="orderForm" class="grid">
+        <div class="left">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone (WhatsApp)</label>
+            <input id="phone" name="phone" type="tel" placeholder="e.g. 98XXXXXXXX" required />
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" />
+          </div>
+
+          <div class="field">
+            <label for="address">Address / Business details</label>
+            <textarea id="address" name="address" placeholder="Business name, website, anything we should know"></textarea>
+          </div>
+
+          <div class="field">
+            <label>Choose package</label>
+            <div class="package" id="packages">
+              <label class="pkg" data-days="2" data-price="99">
+                <input type="radio" name="package" value="2days" checked />
+                <strong>2 Days Setup</strong><div class="small">₹99</div>
+              </label>
+
+              <label class="pkg" data-days="3" data-price="149">
+                <input type="radio" name="package" value="3days" />
+                <strong>3 Days Setup</strong><div class="small">₹149</div>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="notes">Notes / Requirements</label>
+            <textarea id="notes" name="notes" placeholder="Any special instructions, preferred colors, login details (if you want to share later)"></textarea>
+          </div>
+
+        </div>
+
+        <div class="right">
+          <div class="summary">
+            <h3>Order Summary</h3>
+            <div class="line"><div>Package</div><div id="summaryPackage">2 Days Setup</div></div>
+            <div class="line"><div>Price</div><div id="summaryPrice">₹99</div></div>
+            <div class="line"><div>GST (if any)</div><div id="summaryTax">—</div></div>
+            <div class="line" style="font-weight:700"><div>Total</div><div id="summaryTotal">₹99</div></div>
+
+            <div style="margin-top:10px" class="small">Pay using UPI: <span style="font-weight:600">rudranshh@ptyes</span></div>
+            <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+              <div class="upi">
+                <div class="copy-btn" id="copyUpi">Copy UPI</div>
+              </div>
+              <button type="button" class="btn ghost" id="whatsappPreview">Preview WhatsApp Message</button>
+            </div>
+
+            <div class="actions">
+              <button id="submitBtn" class="btn primary" type="submit">Place Order</button>
+              <button id="resetBtn" type="button" class="btn ghost">Reset</button>
+            </div>
+
+            <div id="alertArea"></div>
+            <div class="small" style="margin-top:10px">After placing your order you'll get a confirmation and a WhatsApp message will open so you can send the order to the seller quickly.</div>
+          </div>
+
+          <footer>
+            <p class="small">Need custom package? Contact us: <a href="https://wa.link/9rppu5" target="_blank" rel="noopener">WhatsApp</a></p>
+          </footer>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script>
+  // ======= Configuration: replace these with your own endpoints if you have them =======
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/your_form_id"; // <- change this to your Formspree endpoint or webhook URL
+  const SELLER_WHATSAPP_LINK = "https://wa.link/9rppu5"; // seller's quick link (opens chat). Replace if you have direct phone number link.
+  const UPI_ID = "rudranshh@ptyes"; // shown to user for payment (copy)
+  // ==================================================================================
+
+  // Elements
+  const packagesEl = document.getElementById('packages');
+  const pkgLabels = packagesEl.querySelectorAll('.pkg');
+  const summaryPackage = document.getElementById('summaryPackage');
+  const summaryPrice = document.getElementById('summaryPrice');
+  const summaryTotal = document.getElementById('summaryTotal');
+  const copyUpiBtn = document.getElementById('copyUpi');
+  const whatsappPreview = document.getElementById('whatsappPreview');
+  const orderForm = document.getElementById('orderForm');
+  const alertArea = document.getElementById('alertArea');
+  const submitBtn = document.getElementById('submitBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  // Init active class based on default checked radio
+  function updateActivePackage() {
+    pkgLabels.forEach(label => {
+      const radio = label.querySelector('input[type="radio"]');
+      if (radio.checked) {
+        label.classList.add('active');
+        const days = label.dataset.days;
+        const price = parseInt(label.dataset.price,10);
+        summaryPackage.textContent = days + (days == "1" ? " Day" : " Days") + " Setup";
+        summaryPrice.textContent = "₹" + price;
+        summaryTotal.textContent = "₹" + price;
+      } else {
+        label.classList.remove('active');
+      }
+    });
+  }
+
+  packagesEl.addEventListener('click', (e) => {
+    const parent = e.target.closest('.pkg');
+    if (!parent) return;
+    const radio = parent.querySelector('input[type="radio"]');
+    radio.checked = true;
+    updateActivePackage();
+  });
+
+  updateActivePackage();
+
+  // Copy UPI
+  copyUpiBtn.addEventListener('click', () => {
+    navigator.clipboard?.writeText(UPI_ID).then(() => {
+      showAlert("UPI id copied to clipboard: " + UPI_ID, "success");
+    }).catch(()=> {
+      showAlert("Could not copy automatically. UPI: " + UPI_ID, "error");
+    });
+  });
+
+  // WhatsApp preview
+  whatsappPreview.addEventListener('click', () => {
+    const name = document.getElementById('name').value || "[name]";
+    const phone = document.getElementById('phone').value || "[phone]";
+    const pkg = summaryPackage.textContent;
+    const price = summaryPrice.textContent;
+    const notes = document.getElementById('notes').value || "-";
+    const address = document.getElementById('address').value || "-";
+    const message = `New Order from ${name}%0APhone: ${phone}%0APackage: ${pkg} - ${price}%0AAddress: ${encodeURIComponent(address)}%0ANotes: ${encodeURIComponent(notes)}%0AUPI: ${UPI_ID}`;
+    // open seller WhatsApp link (this will open chat)
+    window.open(SELLER_WHATSAPP_LINK + "?text=" + message, "_blank");
+  });
+
+  // Form submit handler
+  orderForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlerts();
+
+    // Basic validation
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    if (!name || !phone) {
+      showAlert("Please provide your name and phone number.", "error");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Placing order...";
+
+    // Build order payload
+    const packageEl = document.querySelector('input[name="package"]:checked').closest('.pkg');
+    const days = packageEl.dataset.days;
+    const price = packageEl.dataset.price;
+    const data = {
+      name,
+      phone,
+      email: document.getElementById('email').value.trim(),
+      address: document.getElementById('address').value.trim(),
+      package: days + " days",
+      price: "₹" + price,
+      notes: document.getElementById('notes').value.trim(),
+      upi: UPI_ID,
+      created_at: new Date().toISOString()
+    };
+
+    // 1) Send to Formspree (you must replace FORMSPREE_ENDPOINT)
+    try {
+      const resp = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept":"application/json" },
+        body: JSON.stringify(data)
+      });
+
+      if (!resp.ok) {
+        // still try to open whatsapp
+        showAlert("Order sent locally but server returned an error. We'll still open WhatsApp so you can notify us.", "error");
+      } else {
+        showAlert("Order successfully sent. Opening WhatsApp so you can confirm/send to seller.", "success");
+      }
+    } catch (err) {
+      showAlert("Could not send order to server. We'll still open WhatsApp to notify the seller.", "error");
+    }
+
+    // 2) Open WhatsApp chat with prefilled message (for immediate notification)
+    const message = `New Order from ${name}%0APhone: ${phone}%0APackage: ${days} Days - ₹${price}%0AAddress: ${encodeURIComponent(data.address)}%0ANotes: ${encodeURIComponent(data.notes)}%0AUPI: ${UPI_ID}`;
+    // Try opening seller's chat: if SELLER_WHATSAPP_LINK already contains ?text param, adding more might break; we append correctly:
+    let waUrl = SELLER_WHATSAPP_LINK;
+    if (!waUrl.includes("send") && !waUrl.includes("wa.me") && !waUrl.includes("api.whatsapp.com")) {
+      // assume it's a short link like wa.link/xxxx -> append ?text=
+      waUrl = waUrl + (waUrl.includes("?") ? "&" : "?") + "text=" + message;
+    } else {
+      waUrl = waUrl + (waUrl.includes("?") ? "&" : "?") + "text=" + message;
+    }
+    // Open in new tab/window
+    window.open(waUrl, "_blank");
+
+    // Reset UI
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Place Order";
+    orderForm.reset();
+    updateActivePackage();
+  });
+
+  resetBtn.addEventListener('click', () => {
+    orderForm.reset();
+    updateActivePackage();
+    clearAlerts();
+  });
+
+  // Helpers
+  function showAlert(text, type="success") {
+    const div = document.createElement('div');
+    div.className = type === "success" ? "success" : "error";
+    div.textContent = text;
+    alertArea.innerHTML = "";
+    alertArea.appendChild(div);
+    // auto-hide after 10s
+    setTimeout(() => {
+      if (alertArea.contains(div)) alertArea.removeChild(div);
+    }, 10000);
+  }
+  function clearAlerts(){ alertArea.innerHTML = ""; }
+
+  // Initialize: set UPI copy tooltip
+  copyUpiBtn.title = "Copy UPI id: " + UPI_ID;
+</script>
+</body>
+  </html>
